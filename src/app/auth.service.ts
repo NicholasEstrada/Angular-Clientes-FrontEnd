@@ -12,7 +12,7 @@ import { JwtHelperService } from '@auth0/angular-jwt'
 })
 export class AuthService {
 
-  apiURL: string = environment.apiURLBase + "/api/usuarios"
+  apiURL: string = environment.apiURLBase + "/auth/register"
   tokenURL: string = environment.apiURLBase + environment.obterTokenUrl
   clienteID: string = environment.clienteId;
   clienteSecret: string = environment.clienteSecret
