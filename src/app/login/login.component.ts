@@ -10,6 +10,7 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent {
 
+  nome: string;
   username: string;
   password: string;
   cadastrando: boolean;

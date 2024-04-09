@@ -1,7 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Usuario } from './login/usuario';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { tap, switchMap } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 
@@ -23,13 +24,13 @@ export class AuthService {
   ) { }
 
   obterToken(){
-    const tokenString = localStorage.getItem('access_token')
-    if(tokenString){
+    /*const tokenString =*/return localStorage.getItem('access_token')
+    /*if(tokenString){
       const token = JSON.parse(tokenString).access_token
       return token;
     }else{
       return null;
-    }
+    }*/
   }
 
   encerrarSessao(){
@@ -58,7 +59,7 @@ export class AuthService {
     return this.http.post<any>(this.apiURL, usuario);
   }
 
-  tentarLogar(username: string, password: string) : Observable<any>{
+  /*tentarLogar(username: string, password: string) : Observable<any>{
     const params = new HttpParams()
                     .set('username', username)
                     .set('password', password)
@@ -71,5 +72,34 @@ export class AuthService {
     }
 
     return this.http.post( this.tokenURL, params.toString() , { headers })
+  }*/
+  tentarLogar(username: string, password: string) : Observable<any>{
+    const body = {
+      username: username,
+      password: password
+    };
+
+    return this.http.post(this.tokenURL, body).pipe(
+      tap((response: any) => {
+        const token = response.token;
+        if (token) {
+          localStorage.setItem('access_token', token);
+        }
+      }),
+      switchMap(() => {
+        const token = localStorage.getItem('access_token');
+        if (token) {
+          const headers = {
+            'Authorization': 'Bearer ' + token
+          };
+          // Agora você pode fazer a requisição autenticada com o token JWT
+          return this.http.get(this.tokenURL, { headers });
+        } else {
+          // Tratar o caso em que não há token disponível
+          return throwError('Token não encontrado');
+        }
+      })
+    );
   }
+
 }
