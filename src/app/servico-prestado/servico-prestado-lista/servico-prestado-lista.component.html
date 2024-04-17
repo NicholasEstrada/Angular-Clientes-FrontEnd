@@ -9,6 +9,7 @@
         <div class="form-group">
           <label>Dominio: </label>
           <select class="form-control"
+                  [ngModelOptions]="{standalone: true}"
                   [(ngModel)]="dominioSelecionadoId">
             <option value="">Selecione ...</option>
             <option *ngFor="let dominio of dominios"
@@ -16,6 +17,7 @@
               {{ dominio.dominio }}
             </option>
           </select>
+
         </div>
       </div>
     </div>

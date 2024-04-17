@@ -35,6 +35,6 @@ export class ClientesService {
   }
 
   getDadosSensiveisPorDominio(id: number) : Observable<any>{
-    return this.http.get<any>(`${this.apiURL}/${"inventor/dadosSensiveisDomain"}`);
+    return this.http.get<any>(`${this.apiURL}/${"inventor/dadosSensiveisDomain?dominioId="}${id}`);
   }
 }
