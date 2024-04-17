@@ -1,6 +1,6 @@
-<h1 class="mt-4">Serviço Prestado</h1>
+<h1 class="mt-4">Vasculhador em site</h1>
 <ol class="breadcrumb mb-4">
-  <li class="breadcrumb-bitem active">Novo</li>
+  <li class="breadcrumb-bitem active">Nova vasculha</li>
 </ol>
 <div class="container">
   <form #form="ngForm" (submit)="onSubmit()">
@@ -19,60 +19,22 @@
     <div class="row">
       <div class="col-md-12">
         <div class="form-group">
-          <label>Cliente: </label>
-          <select class="form-control"
-                  [ngModelOptions]="{standalone: true}"
-                  [(ngModel)]="servico.idCliente">
-            <option value="">Selecione ...</option>
-            <option *ngFor="let cliente of clientes"
-                    [ngValue]="cliente.id">
-              {{cliente.nome}}
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label> Descrição: </label>
+          <label> Dominio/Site: </label>
           <input  class="form-control"
-                  [(ngModel)]="servico.descricao" type="text"
+                  [(ngModel)]="dominio.dominio" type="text"
                   name="descricao" id="inputDescricao">
         </div>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label> Data: </label>
-          <input  class="form-control"
-                  [(ngModel)]="servico.data" type="text"
-                  name="data" id="inputData">
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="form-group">
-          <label> Preço: </label>
-          <input  class="form-control"
-                  [(ngModel)]="servico.preco" type="text"
-                  name="preco" id="inputPreco">
-        </div>
-      </div>
-
-    </div>
-
 
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-4">
         <button type="submit" class="btn btn-success">
-          <i class="fa fa-save"></i>Salvar</button>
+          <i class="fa fa-solid fa-chart-bar"></i> Vasculhar</button>
 
           <button type="button" class="btn btn-danger ml-1"
-              routerLink="/servicos-prestados/lista" >
+              routerLink="/inventor-data/lista" >
             <i class="fa fa-arrow-alt-circle-left"></i> Voltar
           </button>
       </div>

@@ -24,13 +24,7 @@ export class AuthService {
   ) { }
 
   obterToken(){
-    /*const tokenString =*/return localStorage.getItem('access_token')
-    /*if(tokenString){
-      const token = JSON.parse(tokenString).access_token
-      return token;
-    }else{
-      return null;
-    }*/
+    return localStorage.getItem('access_token');
   }
 
   encerrarSessao(){
@@ -76,30 +70,16 @@ export class AuthService {
   tentarLogar(username: string, password: string) : Observable<any>{
     const body = {
       username: username,
-      password: password
+      password: password,
+      grant_type: 'password'
     };
 
-    return this.http.post(this.tokenURL, body).pipe(
-      tap((response: any) => {
-        const token = response.token;
-        if (token) {
-          localStorage.setItem('access_token', token);
-        }
-      }),
-      switchMap(() => {
-        const token = localStorage.getItem('access_token');
-        if (token) {
-          const headers = {
-            'Authorization': 'Bearer ' + token
-          };
-          // Agora você pode fazer a requisição autenticada com o token JWT
-          return this.http.get(this.tokenURL, { headers });
-        } else {
-          // Tratar o caso em que não há token disponível
-          return throwError('Token não encontrado');
-        }
-      })
-    );
+    const headers = {
+      'Authorization': 'Basic ' + btoa(`${this.clienteID}:${this.clienteSecret}`),
+      'Content-Type': 'application/json'
+    };
+
+    return this.http.post(this.tokenURL, body, { headers });
   }
 
 }

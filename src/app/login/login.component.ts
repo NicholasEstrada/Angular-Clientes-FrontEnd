@@ -27,12 +27,12 @@ export class LoginComponent {
       .tentarLogar(this.username, this.password)
       .subscribe(response => {
         const access_token = JSON.stringify(response);
-        localStorage.setItem('access_token', access_token)
+        const valueJSON = JSON.parse(access_token)
+        localStorage.setItem('access_token', valueJSON.token)
         this.router.navigate(['/home'])
       }, errorResponse => {
         this.errors = ['Usuário e/ou senha incorretos']
       })
-    this.router.navigate(['/home'])
   }
 
   preparaCadastrar(event){

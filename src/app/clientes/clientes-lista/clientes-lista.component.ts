@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Cliente } from '../cliente';
 import { ClientesService } from 'src/app/clientes.service';
 import { Router } from '@angular/router';
+import { dominioClass } from 'src/app/servico-prestado/dominioClass';
 
 @Component({
   selector: 'app-clientes-lista',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class ClientesListaComponent implements OnInit {
 
-  clientes: Cliente[] = [];
+  dominio: dominioClass[] = [];
   clienteSelecionado: Cliente;
   mensagemSucesso: string;
   mensagemErro: string;
@@ -21,8 +22,8 @@ export class ClientesListaComponent implements OnInit {
 
   ngOnInit(): void {
     this.service
-    .getClientes()
-    .subscribe( resposta => this.clientes = resposta );
+    .getDominios()
+    .subscribe( resposta => this.dominio = resposta );
   }
 
   novoCadastro(){

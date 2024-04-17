@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientesService } from 'src/app/clientes.service';
 import { Cliente } from 'src/app/clientes/cliente';
-import { ServicoPrestado } from '../servicoPrestado';
+import { dadoSensiveis } from '../dadoSensiveis';
 import { ServicoPrestadoService } from 'src/app/servico-prestado.service';
+import { dominioClass } from '../dominioClass';
 
 @Component({
   selector: 'app-servico-prestado-form',
@@ -11,8 +12,8 @@ import { ServicoPrestadoService } from 'src/app/servico-prestado.service';
 })
 export class ServicoPrestadoFormComponent implements OnInit {
 
-  clientes: Cliente[] = []
-  servico: ServicoPrestado;
+  clientes: dominioClass[] = []
+  dominio: dadoSensiveis;
   success: boolean = false;
   errors: String[];
 
@@ -20,22 +21,22 @@ export class ServicoPrestadoFormComponent implements OnInit {
     private clienteService: ClientesService,
     private service: ServicoPrestadoService
   ) {
-    this.servico = new ServicoPrestado();
+    this.dominio = new dadoSensiveis();
    }
 
   ngOnInit(): void {
     this.clienteService
-      .getClientes()
+      .getDominios()
       .subscribe( response => this.clientes = response );
   }
 
   onSubmit(){
     this.service
-      .salvar(this.servico)
+      .salvar(this.dominio)
       .subscribe( response => {
         this.success = true;
         this.errors = null;
-        this.servico = new ServicoPrestado();
+        this.dominio = new dadoSensiveis();
       }, errorResponse => {
         this.success = false;
         this.errors = errorResponse.error.errors;

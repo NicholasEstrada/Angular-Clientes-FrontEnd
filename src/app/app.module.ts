@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { LayoutComponent } from './layout/layout.component';
 import { AuthService } from './auth.service';
 import { TokenInterceptor } from './token.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { TokenInterceptor } from './token.interceptor';
     AppRoutingModule,
     TemplateModule,
     ClientesModule,
-    ServicoPrestadoModule
+    ServicoPrestadoModule,
+    BrowserAnimationsModule
   ],
   providers: [
     ClientesService,

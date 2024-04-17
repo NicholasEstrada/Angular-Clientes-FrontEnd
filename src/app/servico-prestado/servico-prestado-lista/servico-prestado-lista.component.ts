@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicoPrestadoBusca } from './servicoPrestadoBusca';
 import { ServicoPrestadoService } from 'src/app/servico-prestado.service';
+import { dominioClass } from 'src/app/servico-prestado/dominioClass';
+import { ClientesService } from 'src/app/clientes.service';
+import { dadoSensiveis } from '../dadoSensiveis';
 
 @Component({
   selector: 'app-servico-prestado-lista',
@@ -10,31 +13,38 @@ import { ServicoPrestadoService } from 'src/app/servico-prestado.service';
 export class ServicoPrestadoListaComponent implements OnInit {
 
   nome: string;
-  mes: number;
-  meses: number[];
-  lista: ServicoPrestadoBusca[];
   message: string;
+  dominios: any[] = [];
+  dominioSelecionadoId: number;
+  dadosSensiveis: any[] = [];
 
   constructor(
-    private service: ServicoPrestadoService
+    private clienteService: ClientesService
   ) {
-    this.meses = [1,2,3,4,5,6,7,8,9,10,11,12]
    }
 
   ngOnInit(): void {
+    this.carregarDominios();
   }
 
-  consultar(){
-    this.service
-      .buscar(this.nome, this.mes)
-      .subscribe( response => {
-        this.lista = response;
-        if( this.lista.length <= 0){
-          this.message = "Nenhum Registro encontrado."
-        }else{
-          this.message = null
-        }
-      })
+  carregarDominios() {
+    // Lógica para carregar a lista de domínios do seu serviço
+    this.clienteService.getDominios().subscribe((dominios: any[]) => {
+      this.dominios = dominios;
+    });
+  }
+
+  consultar() {
+    if (!this.dominioSelecionadoId) {
+      this.message = 'Por favor, selecione um domínio.';
+      return;
+    }
+
+    // Lógica para buscar os dados sensíveis relacionados ao domínio selecionado
+    this.clienteService.getDadosSensiveisPorDominio(this.dominioSelecionadoId).subscribe((dados: any[]) => {
+      this.dadosSensiveis = dados;
+      this.message = '';
+    });
   }
 
 }

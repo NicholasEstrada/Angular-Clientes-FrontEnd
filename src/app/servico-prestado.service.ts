@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ServicoPrestado } from './servico-prestado/servicoPrestado';
+import { dadoSensiveis } from './servico-prestado/dadoSensiveis';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment'
 import { ServicoPrestadoBusca } from './servico-prestado/servico-prestado-lista/servicoPrestadoBusca';
@@ -10,12 +10,12 @@ import { ServicoPrestadoBusca } from './servico-prestado/servico-prestado-lista/
 })
 export class ServicoPrestadoService {
 
-  apiURL: string = environment.apiURLBase + "/api/servicos-prestados"
+  apiURL: string = environment.apiURLBase + "/dadosSensiveis"
 
   constructor(private http: HttpClient) { }
 
-  salvar(servicoPrestado: ServicoPrestado) :Observable<ServicoPrestado>{
-    return this.http.post<ServicoPrestado>(this.apiURL, servicoPrestado);
+  salvar(servicoPrestado: dadoSensiveis) :Observable<dadoSensiveis>{
+    return this.http.post<dadoSensiveis>(this.apiURL, servicoPrestado);
   }
 
   buscar(nome: string, mes: number) : Observable<ServicoPrestadoBusca[]> {

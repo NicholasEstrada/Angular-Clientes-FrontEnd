@@ -1,64 +1,62 @@
-<h1 class="mt-4">Serviço Prestado</h1>
+<h1 class="mt-4">Inventor Data Sensetive</h1>
 <ol class="breadcrumb mb-4">
-  <li class="breadcrumb-bitem active">Consulta</li>
+  <li class="breadcrumb-bitem active">Consulta de dados sensíveis em sites</li>
 </ol>
 <div class="container">
   <form #consultaForm="ngForm" (submit)="consultar()">
     <div class="row">
       <div class="col-md-6">
-        <label for="inputNome">Nome Cliente:</label>
-        <input  type="text" [(ngModel)]="nome"
-                name="nome" class="form-control" id="inputNome">
-      </div>
-
-      <div class="col-md-6">
-        <label for="inputMes">Mês:</label>
-        <select [(ngModel)]="mes" class="form-control" name="mes">
-          <option value="">Selecione ...</option>
-          <option *ngFor="let mes of meses" [value]="mes">
-            {{ mes }}
-          </option>
-        </select>
+        <div class="form-group">
+          <label>Dominio: </label>
+          <select class="form-control"
+                  [(ngModel)]="dominioSelecionadoId">
+            <option value="">Selecione ...</option>
+            <option *ngFor="let dominio of dominios"
+                    [value]="dominio.id">
+              {{ dominio.dominio }}
+            </option>
+          </select>
+        </div>
       </div>
     </div>
-
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-5">
         <button type="submit" class="btn btn-primary mt-3">
           <i class="fa fa-search"></i> Consultar
-        </button>
-
-        <button type="button" routerLink="/servicos-prestados/form" class="btn btn-warning mt-3 ml-1">
-          <i class="fa fa-plus"></i> Novo
         </button>
       </div>
     </div>
   </form>
-
   <div class="row mt-3">
     <div class="alert alert-warning" role="alert" *ngIf="message">
       {{ message }}
     </div>
     <div class="col-md-12">
-      <table class="table">
+      <table class="table" *ngIf="dadosSensiveis.length > 0">
         <thead>
           <tr>
-            <th>Cliente</th>
-            <th>Descrição</th>
-            <th>Valor</th>
-            <th>Data</th>
+            <th>Dominio/Site</th>
+            <th>Localização</th>
+            <th>Dado Sensível</th>
+            <th>Tipo dado Sensível</th>
+            <th>Data da Busca</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let s of lista">
-            <td>{{ s.cliente.nome }}</td>
-            <td>{{ s.descricao }}</td>
-            <td>{{ s.valor }}</td>
-            <td>{{ s.data }}</td>
+          <tr *ngFor="let s of dadosSensiveis">
+            <td>{{ s.dominio.dominio }}</td>
+            <td>{{ s.pathLocation }}</td>
+            <td>{{ s.sensitive }}</td>
+            <td>{{ s.tipo }}</td>
+            <td>{{ s.dataCriacao | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
           </tr>
         </tbody>
       </table>
-
+      <div class="alert alert-info" role="alert" *ngIf="dadosSensiveis.length === 0 && !message">
+        Não há dados sensíveis para exibir.
+      </div>
     </div>
   </div>
 </div>
+
+
