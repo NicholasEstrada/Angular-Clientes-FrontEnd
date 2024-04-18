@@ -29,15 +29,15 @@
           <tr>
             <th>ID</th>
             <th>Dominio</th>
-            <th></th>
+            <th>Deletar</th>
           </tr>
         </thead>
         <tbody>
             <tr *ngFor="let cliente of dominio">
               <td>{{ cliente.id }}</td>
-              <td>{{ cliente.dominio }}</td>
+              <td><a href="http://{{ cliente.dominio }}" target="_blank" rel="noopener noreferrer">{{ cliente.dominio }}</a></td>
               <td>
-                <button class="btn btn-primary"
+                <button class="btn btn-primary" hidden
                     routerLink="/clientes/form/{{ cliente.id }}">
                   <i class="fa fa-edit"></i>
                 </button>
@@ -60,7 +60,7 @@
             <h1>Confirmação</h1>
         </div>
         <div class="modal-body" *ngIf="clienteSelecionado">
-            Confirma a deleção do(a) cliente {{ clienteSelecionado.nome }}
+            Tem certeza que deseja deletar o dominio <a href="http://{{ clienteSelecionado.dominio }}" target="_blank" rel="noopener noreferrer">{{ clienteSelecionado.dominio }}</a>?
         </div>
         <div class="modal-footer">
           <button class="btn btn-success" (click)="deletarCliente()"

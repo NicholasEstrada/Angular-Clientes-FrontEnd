@@ -20,9 +20,15 @@
       <div class="col-md-12">
         <div class="form-group">
           <label> Dominio/Site: </label>
-          <input  class="form-control"
+          <!--<input  class="form-control"
                   [(ngModel)]="dominio.dominio" type="text"
-                  name="descricao" id="inputDescricao">
+                  name="descricao" id="inputDescricao"> -->
+            <input class="form-control"
+              [(ngModel)]="dominio.dominio"
+              type="text"
+              name="dominio"
+              id="inputDominio">
+
         </div>
       </div>
     </div>
@@ -33,7 +39,7 @@
         <button type="submit" class="btn btn-success">
           <i class="fa fa-solid fa-chart-bar"></i> Vasculhar</button>
 
-          <button type="button" class="btn btn-danger ml-1"
+          <button type="button" class="btn btn-primary ml-1"
               routerLink="/clientes/lista" >
             <i class="fa fa-arrow-alt-circle-left"></i> Voltar
           </button>

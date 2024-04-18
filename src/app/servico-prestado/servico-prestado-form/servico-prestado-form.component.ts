@@ -4,6 +4,8 @@ import { Cliente } from 'src/app/clientes/cliente';
 import { dadoSensiveis } from '../dadoSensiveis';
 import { ServicoPrestadoService } from 'src/app/servico-prestado.service';
 import { dominioClass } from '../dominioClass';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-servico-prestado-form',
@@ -19,7 +21,8 @@ export class ServicoPrestadoFormComponent implements OnInit {
 
   constructor(
     private clienteService: ClientesService,
-    private service: ServicoPrestadoService
+    private service: ServicoPrestadoService,
+    private router: Router
   ) {
     this.dominio = new dadoSensiveis();
    }
@@ -30,7 +33,7 @@ export class ServicoPrestadoFormComponent implements OnInit {
       .subscribe( response => this.clientes = response );
   }
 
-  onSubmit(){
+  /*onSubmit(){
     this.service
       .salvar(this.dominio)
       .subscribe( response => {
@@ -41,7 +44,32 @@ export class ServicoPrestadoFormComponent implements OnInit {
         this.success = false;
         this.errors = errorResponse.error.errors;
       })
+    }*/
+    onSubmit() {
+      const requestBody = {
+        dominio: this.dominio.dominio
+      };
+
+      this.service
+        .salvar(requestBody)
+        .subscribe(
+          response => {
+            this.success = true;
+            this.errors = null;
+            this.dominio = new dadoSensiveis();
+
+            this.router.navigate(['/clientes']);
+          },
+          errorResponse => {
+            this.success = false;
+            this.errors = errorResponse.error.errors;
+            this.router.navigate(['/clientes']);
+          }
+
+        );
     }
+
+
 
 
 

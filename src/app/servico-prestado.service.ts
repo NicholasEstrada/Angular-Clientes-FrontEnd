@@ -10,21 +10,16 @@ import { ServicoPrestadoBusca } from './servico-prestado/servico-prestado-lista/
 })
 export class ServicoPrestadoService {
 
-  apiURL: string = environment.apiURLBase + "/dadosSensiveis"
+  apiURL: string = environment.apiURLBase + "/inventor"
 
   constructor(private http: HttpClient) { }
 
-  salvar(servicoPrestado: dadoSensiveis) :Observable<dadoSensiveis>{
-    return this.http.post<dadoSensiveis>(this.apiURL, servicoPrestado);
+  salvar(requestBody: any): Observable<any> {
+    return this.http.post<any>(this.apiURL+"/buscaPorDominio", requestBody);
   }
 
-  buscar(nome: string, mes: number) : Observable<ServicoPrestadoBusca[]> {
 
-    const httpParams = new HttpParams()
-                        .set("nome", nome)
-                        .set("mes", mes ? mes.toString() : '');
-
-    const url = this.apiURL + "?" + httpParams.toString()
-    return this.http.get<any>(url);
+  buscar(requestBody: any): Observable<any> {
+    return this.http.post<any>(this.apiURL+"/buscaPorDominio", requestBody);
   }
 }
