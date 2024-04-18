@@ -53,20 +53,6 @@ export class AuthService {
     return this.http.post<any>(this.apiURL, usuario);
   }
 
-  /*tentarLogar(username: string, password: string) : Observable<any>{
-    const params = new HttpParams()
-                    .set('username', username)
-                    .set('password', password)
-                    .set('grant_type', 'password')
-
-
-    const headers = {
-      'Authorization': 'Basic ' + btoa(`${this.clienteID}:${this.clienteSecret}`),
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
-
-    return this.http.post( this.tokenURL, params.toString() , { headers })
-  }*/
   tentarLogar(username: string, password: string) : Observable<any>{
     const body = {
       username: username,
