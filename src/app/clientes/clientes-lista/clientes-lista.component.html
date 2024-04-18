@@ -1,4 +1,4 @@
-<h1 class="mt-4">Clientes</h1>
+<h1 class="mt-4">Dominios Processados</h1>
 <ol class="breadcrumb mb-4">
   <li class="breadcrumb-item active">Consulta</li>
 </ol>
@@ -28,18 +28,14 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>Nome</th>
-            <th>CPF</th>
-            <th>Data Cadastro</th>
+            <th>Dominio</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
             <tr *ngFor="let cliente of dominio">
               <td>{{ cliente.id }}</td>
-              <td>{{ cliente.nome }}</td>
-              <td>{{ cliente.cpf }}</td>
-              <td>{{ cliente.dataCadastro }}</td>
+              <td>{{ cliente.dominio }}</td>
               <td>
                 <button class="btn btn-primary"
                     routerLink="/clientes/form/{{ cliente.id }}">
