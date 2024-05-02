@@ -47,4 +47,11 @@ export class ServicoPrestadoListaComponent implements OnInit {
     });
   }
 
+  consultarDadosSensiveis(pathLocationId: number): void {
+    this.clienteService.consultarDadosSensiveisPorPathLocation(pathLocationId)
+      .subscribe((dados: any[]) => {
+        this.dadosSensiveis = dados;
+      });
+  }
+
 }
