@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ServicoPrestadoBusca } from './servicoPrestadoBusca';
-import { ServicoPrestadoService } from 'src/app/servico-prestado.service';
-import { dominioClass } from 'src/app/servico-prestado/dominioClass';
 import { ClientesService } from 'src/app/clientes.service';
-import { dadoSensiveis } from '../dadoSensiveis';
 
 @Component({
   selector: 'app-servico-prestado-lista',
@@ -17,18 +13,17 @@ export class ServicoPrestadoListaComponent implements OnInit {
   dominios: any[] = [];
   dominioSelecionadoId: number;
   dadosSensiveis: any[] = [];
+  groupedData: any[] = [];
 
   constructor(
     private clienteService: ClientesService
-  ) {
-   }
+  ) { }
 
   ngOnInit(): void {
     this.carregarDominios();
   }
 
   carregarDominios() {
-    // Lógica para carregar a lista de domínios do seu serviço
     this.clienteService.getDominios().subscribe((dominios: any[]) => {
       this.dominios = dominios;
     });
@@ -40,18 +35,43 @@ export class ServicoPrestadoListaComponent implements OnInit {
       return;
     }
 
-    // Lógica para buscar os dados sensíveis relacionados ao domínio selecionado
     this.clienteService.getDadosSensiveisPorDominio(this.dominioSelecionadoId).subscribe((dados: any[]) => {
       this.dadosSensiveis = dados;
+      this.groupDataByPathLocation();
       this.message = '';
     });
+  }
+
+  groupDataByPathLocation() {
+    const grouped = this.dadosSensiveis.reduce((acc, current) => {
+      const pathId = current.pathLocation.id;
+      if (!acc[pathId]) {
+        acc[pathId] = {
+          id: pathId,
+          path: current.pathLocation.pathLocation.split('|')[1],
+          tipoDeArquivo: current.pathLocation.tipoDeArquivo,
+          processamento: current.pathLocation.processamento,
+          sensitiveData: []
+        };
+      }
+      acc[pathId].sensitiveData.push(current);
+      return acc;
+    }, {});
+    this.groupedData = Object.values(grouped);
+  }
+
+  toggleCollapse(id: number) {
+    const collapseElement = document.getElementById('collapse' + id);
+    if (collapseElement) {
+      collapseElement.classList.toggle('show');
+    }
   }
 
   consultarDadosSensiveis(pathLocationId: number): void {
     this.clienteService.consultarDadosSensiveisPorPathLocation(pathLocationId)
       .subscribe((dados: any[]) => {
         this.dadosSensiveis = dados;
+        this.groupDataByPathLocation();
       });
   }
-
 }

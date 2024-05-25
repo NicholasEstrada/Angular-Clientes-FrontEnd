@@ -17,7 +17,6 @@
               {{ dominio.dominio }}
             </option>
           </select>
-
         </div>
       </div>
     </div>
@@ -34,43 +33,52 @@
       {{ message }}
     </div>
     <div class="col-md-12">
-      <table class="table" *ngIf="dadosSensiveis.length > 0">
-        <thead>
-          <tr>
-            <th>Dominio/Site</th>
-            <th>Localização (Clique para filtrar)</th>
-            <th>Dado Sensível</th>
-            <th>Tipo dado Sensível</th>
-            <th>Data da Busca</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let s of dadosSensiveis">
-            <td>{{ s.dominio.dominio }}</td>
-            <td (click)="consultarDadosSensiveis(s.pathLocation?.id)">
-              {{ s.pathLocation?.pathLocation.split('|')[1] }}
-            </td>
-            <td>{{ s.sensitive }}</td>
-            <td>{{ s.tipo }}</td>
-            <td>{{ s.dataCriacao | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
-          </tr>
-          <!--<div *ngIf="dadosSensiveis">
-            <h2>Dados Sensíveis por PathLocation</h2>
-            <ul>
-              <li *ngFor="let dado of dadosSensiveis">
-                <p>Tipo: {{ dado.tipo }}</p>
-                <p>Dado Sensível: {{ dado.sensitive }}</p>
-                <p>Data de Criação: {{ dado.dataCriacao | date }}</p>
-              </li>
-            </ul>
-          </div>--->
-        </tbody>
-      </table>
+      <div *ngFor="let pathLocation of groupedData">
+        <div class="card">
+          <div class="card-header" (click)="toggleCollapse(pathLocation.id)">
+            <h5 class="mb-0">
+              <button class="btn btn-link" type="button">
+                {{ pathLocation.path }}
+              </button>
+              <p>Quantidade de dados sensíveis: {{ pathLocation.sensitiveData.length }}</p>
+            </h5>
+          </div>
+          <div [id]="'collapse' + pathLocation.id" class="collapse">
+            <div class="card-body">
+
+              <p>Tipo de Arquivo: {{ pathLocation.tipoDeArquivo || 'N/A' }}</p>
+              <p>Processamento: {{ pathLocation.processamento || 'N/A' }}</p>
+              <table class="table mt-3">
+                <thead>
+                  <tr>
+                    <th>Dominio/Site</th>
+                    <th>Dado Sensível</th>
+                    <th>Tipo dado Sensível</th>
+                    <th>Data da Busca</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let s of pathLocation.sensitiveData">
+                    <td>{{ s.dominio.dominio }}</td>
+                    <td>{{ s.sensitive }}</td>
+                    <td>{{ s.tipo }}</td>
+                    <td>{{ s.dataCriacao | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="alert alert-info" role="alert" *ngIf="dadosSensiveis.length === 0 && !message">
         Não há dados sensíveis para exibir.
       </div>
     </div>
   </div>
 </div>
-
-
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>

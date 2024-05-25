@@ -19,16 +19,13 @@
     <div class="row">
       <div class="col-md-12">
         <div class="form-group">
-          <label> Dominio/Site: </label>
-          <!--<input  class="form-control"
-                  [(ngModel)]="dominio.dominio" type="text"
-                  name="descricao" id="inputDescricao"> -->
-            <input class="form-control"
-              [(ngModel)]="dominio.dominio"
-              type="text"
-              name="dominio"
-              id="inputDominio">
-
+          <label for="inputDominio">Dominio/Site:</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon3">https://</span>
+            </div>
+            <input type="text" class="form-control" id="inputDominio" name="dominio" placeholder="Digite o domínio" [(ngModel)]="dominio.dominio">
+          </div>
         </div>
       </div>
     </div>
