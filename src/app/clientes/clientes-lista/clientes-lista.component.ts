@@ -18,30 +18,37 @@ export class ClientesListaComponent implements OnInit {
 
   constructor(
     private service: ClientesService,
-    private router : Router) {}
+    private router: Router) {}
 
   ngOnInit(): void {
     this.service
     .getDominios()
-    .subscribe( resposta => this.dominio = resposta );
+    .subscribe(resposta => this.dominio = resposta);
   }
 
-  novoCadastro(){
-    this.router.navigate(['/inventor-data/form'])
+  novoCadastro() {
+    this.router.navigate(['/inventor-data/form']);
   }
 
-  preparaDelecao(cliente: Cliente){
+  preparaDelecao(cliente: Cliente) {
     this.clienteSelecionado = cliente;
   }
 
-  deletarCliente(){
-    this.service
-    .deletar(this.clienteSelecionado)
-    .subscribe(response => {
-      this.mensagemSucesso = "Cliente deletado com sucesso!"
-      this.ngOnInit()
-    },
-    erro => this.mensagemErro = "Ocorreu um erro ao deletar o cliente.")
+  deletarCliente() {
+    if (this.clienteSelecionado) {
+      this.service
+      .deletar(this.clienteSelecionado)
+      .subscribe(response => {
+        console.log('Resposta do servidor:', response); // Adicione este log
+        this.mensagemSucesso = "Cliente deletado com sucesso!";
+        this.mensagemErro = null; // Limpar a mensagem de erro se o sucesso ocorreu
+        this.ngOnInit();
+      },
+      erro => {
+        console.error('Erro ao deletar cliente:', erro); // Adicione este log
+        this.mensagemErro = "Ocorreu um erro ao deletar o cliente.";
+        this.mensagemSucesso = null; // Limpar a mensagem de sucesso se erro ocorreu
+      });
+    }
   }
-
 }
