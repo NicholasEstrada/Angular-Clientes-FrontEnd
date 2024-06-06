@@ -51,6 +51,7 @@ export class ServicoPrestadoListaComponent implements OnInit {
           path: current.pathLocation.pathLocation.split('|')[1],
           tipoDeArquivo: current.pathLocation.tipoDeArquivo,
           processamento: current.pathLocation.processamento,
+          pathParent: current.pathLocation.pathParent.split('|')[1],
           sensitiveData: []
         };
       }

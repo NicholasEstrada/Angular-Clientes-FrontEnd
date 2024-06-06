@@ -51,6 +51,12 @@
 
               <p>Tipo de Arquivo: {{ pathLocation.tipoDeArquivo || 'N/A' }}</p>
               <p>Processamento: {{ pathLocation.processamento || 'N/A' }}</p>
+              <p>PDF encontrado no link:
+                <a href="{{pathLocation.pathParent || 'N/A'}}" target="_blank">
+                  {{pathLocation.pathParent}}
+                </a>
+              </p>
+
               <table class="table mt-3">
                 <thead>
                   <tr>
