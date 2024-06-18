@@ -18,6 +18,7 @@ export class ServicoPrestadoFormComponent implements OnInit {
   dominio: dadoSensiveis;
   success: boolean = false;
   errors: String[];
+  status: number = -1;
 
   constructor(
     private clienteService: ClientesService,
@@ -58,19 +59,31 @@ export class ServicoPrestadoFormComponent implements OnInit {
             this.errors = null;
             this.dominio = new dadoSensiveis();
 
-            this.router.navigate(['/clientes']);
+            this.monitorTaskStatus();
+            //this.router.navigate(['/clientes']);
           },
           errorResponse => {
             this.success = false;
             this.errors = errorResponse.error.errors;
-            this.router.navigate(['/clientes']);
+            //this.router.navigate(['/clientes']);
           }
 
         );
     }
 
-
-
-
-
+    monitorTaskStatus() {
+      this.service.getTaskStatus().subscribe(
+        (status: number) => {
+          this.status = status;
+          if (status === 0) {
+          } else if (status === -1) {
+            // Tarefa falhou
+          }
+        },
+        error => {
+          console.error('Error receiving task status:', error);
+          this.status = -1; // Em caso de erro, definir status como -1
+        }
+      );
+    }
 }
