@@ -1,6 +1,6 @@
 <h1 class="mt-4">Inventor Data Sensetive</h1>
 <ol class="breadcrumb mb-4">
-  <li class="breadcrumb-bitem active">Consulta de dados sensíveis em sites</li>
+  <li class="breadcrumb-item active">Consulta de dados sensíveis em sites</li>
 </ol>
 <div class="container">
   <form #consultaForm="ngForm" (submit)="consultar()">
@@ -32,7 +32,7 @@
     <div class="alert alert-warning" role="alert" *ngIf="message">
       {{ message }}
     </div>
-    <div class="col-md-12">
+    <div class="col-md-12" *ngIf="dadosSensiveis.length > 0">
       <div *ngFor="let pathLocation of groupedData">
         <div class="card">
           <div class="card-header" (click)="toggleCollapse(pathLocation.id)">
@@ -79,9 +79,20 @@
           </div>
         </div>
       </div>
-      <div class="alert alert-info" role="alert" *ngIf="dadosSensiveis.length === 0 && !message">
-        Não há dados sensíveis para exibir.
-      </div>
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="page === 0">
+            <a class="page-link" href="#" (click)="onPageChange($event, page - 1)">Anterior</a>
+          </li>
+          <li class="page-item" [class.disabled]="page >= (totalElements / size) - 1">
+            <a class="page-link" href="#" (click)="onPageChange($event, page + 1)">Próximo</a>
+          </li>
+        </ul>
+      </nav>
+
+    </div>
+    <div class="alert alert-info" role="alert" *ngIf="dadosSensiveis.length === 0 && !message">
+      Não há dados sensíveis para exibir.
     </div>
   </div>
 </div>

@@ -14,6 +14,9 @@ export class ServicoPrestadoListaComponent implements OnInit {
   dominioSelecionadoId: number;
   dadosSensiveis: any[] = [];
   groupedData: any[] = [];
+  page: number = 0;
+  size: number = 100;
+  totalElements: number = 0;
 
   constructor(
     private clienteService: ClientesService
@@ -24,8 +27,10 @@ export class ServicoPrestadoListaComponent implements OnInit {
   }
 
   carregarDominios() {
-    this.clienteService.getDominios().subscribe((dominios: any[]) => {
-      this.dominios = dominios;
+    this.clienteService.getDominios().subscribe(response => {
+      this.dominios = response;
+    }, error => {
+      console.error('Error loading domains', error);
     });
   }
 
@@ -35,10 +40,13 @@ export class ServicoPrestadoListaComponent implements OnInit {
       return;
     }
 
-    this.clienteService.getDadosSensiveisPorDominio(this.dominioSelecionadoId).subscribe((dados: any[]) => {
-      this.dadosSensiveis = dados;
+    this.clienteService.getDadosSensiveisPorDominio(this.dominioSelecionadoId, this.page, this.size).subscribe(response => {
+      this.dadosSensiveis = response.content;
+      this.totalElements = response.totalElements;
       this.groupDataByPathLocation();
       this.message = '';
+    }, error => {
+      console.error('Error loading sensitive data', error);
     });
   }
 
@@ -73,6 +81,17 @@ export class ServicoPrestadoListaComponent implements OnInit {
       .subscribe((dados: any[]) => {
         this.dadosSensiveis = dados;
         this.groupDataByPathLocation();
+      }, error => {
+        console.error('Error loading sensitive data by path location', error);
       });
   }
+
+  onPageChange(event: Event, page: number) {
+    event.preventDefault();
+    if (page >= 0 && page < Math.ceil(this.totalElements / this.size)) {
+      this.page = page;
+      this.consultar(); // Atualiza a consulta ao mudar de página
+    }
+  }
+
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Cliente } from './clientes/cliente';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { dominioClass } from './servico-prestado/dominioClass';
@@ -34,8 +34,9 @@ export class ClientesService {
     return this.http.delete<any>(`${this.apiURL}/inventor/deletesensetivedatas/${cliente.id}`);
   }
 
-  getDadosSensiveisPorDominio(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiURL}/inventor/dadosSensiveisDomain?dominioId=${id}`);
+  getDadosSensiveisPorDominio(id: number, page: number, size: number): Observable<any> {
+    let params = new HttpParams().set('dominioId', id.toString()).set('page', page.toString()).set('size', size.toString());
+    return this.http.get<any>(`${this.apiURL}/inventor/dadosSensiveisDomain`, { params });
   }
 
   consultarDadosSensiveisPorPathLocation(pathLocationId: number): Observable<any[]> {
