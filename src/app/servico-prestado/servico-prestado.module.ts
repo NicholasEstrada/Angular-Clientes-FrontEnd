@@ -12,6 +12,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {Component} from '@angular/core';
 import {MatInputModule} from '@angular/material/input';
 import {NativeDateAdapter} from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+
 
 
 
@@ -28,6 +31,8 @@ import {NativeDateAdapter} from '@angular/material/core';
     MatDatepickerModule,
     MatFormFieldModule,
     MatNativeDateModule,
+    MatSelectModule,
+    MatOptionModule,
     MatInputModule
   ],
   exports: [

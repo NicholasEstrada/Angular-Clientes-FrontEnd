@@ -7,16 +7,16 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label>Dominio: </label>
-          <select class="form-control"
-                  [ngModelOptions]="{standalone: true}"
-                  [(ngModel)]="dominioSelecionadoId">
-            <option value="">Selecione ...</option>
-            <option *ngFor="let dominio of dominios"
-                    [value]="dominio.id">
-              {{ dominio.dominio }}
-            </option>
-          </select>
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Dominio</mat-label>
+            <mat-select [(value)]="dominioSelecionadoId">
+              <mat-option value="">Selecione ...</mat-option>
+              <mat-option *ngFor="let dominio of dominios" [value]="dominio.id">
+                {{ dominio.dominio }} <strong>{{ dominio.dataCriacao | date: 'dd/MM/yyyy HH:mm:ss' }}</strong>
+                <span class="badge badge-info"> Páginas Visitadas: {{ dominio.qtd_pag_visitadas }}</span>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </div>
     </div>
@@ -48,7 +48,6 @@
           </div>
           <div [id]="'collapse' + pathLocation.id" class="collapse">
             <div class="card-body">
-
               <p>Tipo de Arquivo: {{ pathLocation.tipoDeArquivo || 'N/A' }}</p>
               <p>Processamento: {{ pathLocation.processamento || 'N/A' }}</p>
               <p>PDF encontrado no link:
@@ -56,7 +55,6 @@
                   {{pathLocation.pathParent}}
                 </a>
               </p>
-
               <table class="table mt-3">
                 <thead>
                   <tr>
@@ -89,7 +87,6 @@
           </li>
         </ul>
       </nav>
-
     </div>
     <div class="alert alert-info" role="alert" *ngIf="dadosSensiveis.length === 0 && !message">
       Não há dados sensíveis para exibir.
