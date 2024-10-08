@@ -40,13 +40,13 @@ export class ClientesListaComponent implements OnInit {
       .deletar(this.clienteSelecionado)
       .subscribe(response => {
         console.log('Resposta do servidor:', response); // Adicione este log
-        this.mensagemSucesso = response.message || "Cliente deletado com sucesso!";
+        this.mensagemSucesso = response.message || "Dominio deletado com sucesso!";
         this.mensagemErro = null; // Limpar a mensagem de erro se o sucesso ocorreu
         this.ngOnInit();
       },
       erro => {
         if(erro.statusText == "OK"){
-          this.mensagemSucesso ="Cliente deletado com sucesso!";
+          this.mensagemSucesso ="Dominio deletado com sucesso!";
           this.ngOnInit();
         }else{
           console.error('Erro ao deletar cliente:', erro); // Adicione este log
